@@ -12,11 +12,16 @@ const useTodo = () => {
     todoActions.removeTodo(id);
   };
 
+  const onTodoFetched = () => {
+    todoActions.fetchTodos();
+  };
+
   return {
     todoList: todoList,
     selectedTodo: selectedTodo,
     onTodoAdded,
     onTodoRemoved,
+    onTodoFetched,
   };
 };
 

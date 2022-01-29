@@ -3,6 +3,7 @@ import AddTodoModal from "../components/TodoList/AddTodoModal";
 import TodoList from "../components/TodoList";
 import { useState } from "react";
 import BaseButton from "../components/shared/ui/BaseButton";
+import styled from "styled-components";
 
 const Root: FC = () => {
   const [showAddModal, setShowAddModal] = useState(false);
@@ -14,12 +15,16 @@ const Root: FC = () => {
   return (
     <>
       {showAddModal && <AddTodoModal onClose={onShowAddModalChange} />}
-      <div>
+      <RootInner>
         <BaseButton onClick={onShowAddModalChange}>Add todo</BaseButton>
         <TodoList />
-      </div>
+      </RootInner>
     </>
   );
 };
+
+const RootInner = styled.div`
+  text-align: center;
+`;
 
 export default Root;

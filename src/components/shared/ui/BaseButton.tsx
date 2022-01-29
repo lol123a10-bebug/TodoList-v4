@@ -13,6 +13,15 @@ const BaseButton: React.FC<ButtonHTMLAttributes<any>> = (props) => {
 
 const Button = styled.button`
   padding: 0.5rem 1rem;
+  background-color: #ccc;
+
+  &:hover {
+    background-color: #bbb;
+  }
+
+  &:active {
+    background-color: #eee;
+  }
 `;
 
 export default BaseButton;
