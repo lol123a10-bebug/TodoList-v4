@@ -18,3 +18,10 @@ export const removeData = async (url: string = "", id: string) => {
 
   return response.data;
 };
+
+export const updateData = async <BodyType>(
+  url: string = "",
+  body: BodyType
+) => {
+  const response = await axios.patch(firebaseUrl + url, body);
+};

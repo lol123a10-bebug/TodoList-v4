@@ -1,5 +1,9 @@
 import { useHookstate } from "@hookstate/core";
-import todoHookstate, { todoActions, TodoType } from "../state/todoHookstate";
+import todoHookstate, {
+  EditTodoType,
+  todoActions,
+  TodoType,
+} from "../state/todoHookstate";
 
 const useTodo = () => {
   const { todoList, selectedTodo } = useHookstate(todoHookstate);
@@ -16,12 +20,17 @@ const useTodo = () => {
     todoActions.fetchTodos();
   };
 
+  const onTodoEdited = (data: EditTodoType) => {
+    todoActions.editTodo(data);
+  };
+
   return {
     todoList: todoList,
     selectedTodo: selectedTodo,
     onTodoAdded,
     onTodoRemoved,
     onTodoFetched,
+    onTodoEdited,
   };
 };
 

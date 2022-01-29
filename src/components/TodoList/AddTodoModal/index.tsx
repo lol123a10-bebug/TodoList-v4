@@ -1,11 +1,9 @@
+import { useState } from "react";
 import styled from "styled-components";
 import useTodo from "../../../hookstate/hooks/useTodo";
 import { ChangeEvent, FormEvent } from "react";
 import ModalWrapper from "../../shared/ui/ModalWrapper";
 import BaseButton from "../../shared/ui/BaseButton";
-import { useState } from "react";
-import { useHookstate } from "@hookstate/core";
-import { useEffect } from "react";
 
 type PropsType = {
   onClose: Function;
@@ -22,14 +20,6 @@ const AddTodoModal: React.FC<PropsType> = (props) => {
   const { onTodoAdded } = useTodo();
 
   const [todo, setTodo] = useState(initTodo);
-
-  const todos = useHookstate("imtotods");
-
-  console.log(todos.value);
-
-  useEffect(() => {
-    return () => {};
-  }, []);
 
   const handleTodoValue = (key: "name" | "description") => todo[key];
 

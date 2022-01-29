@@ -1,5 +1,10 @@
 import { createState, none } from "@hookstate/core";
-import { fetchData, removeData, sendData } from "../../utils/helpers/network";
+import {
+  fetchData,
+  removeData,
+  sendData,
+  updateData,
+} from "../../utils/helpers/network";
 
 export type TodoType = {
   id?: string;
@@ -7,6 +12,8 @@ export type TodoType = {
   description: string;
   isDone: boolean;
 };
+
+export type EditTodoType = { id: string; key: keyof TodoType; value: any };
 
 type InitStateType = {
   todoList: TodoType[];
@@ -44,6 +51,15 @@ const removeTodo = async (id: string) => {
   foundTodo?.set(none);
 };
 
-export const todoActions = { addTodo, removeTodo, fetchTodos };
+const editTodo = async (data: EditTodoType) => {
+  const { id, key, value } = data;
+
+  await updateData(`/todos/${id}.json`, { [key]: value });
+
+  const foundTodo = todoHookstate.todoList.find((todo) => todo.id.value === id);
+  foundTodo?.[key].set(value);
+};
+
+export const todoActions = { addTodo, removeTodo, fetchTodos, editTodo };
 
 export default todoHookstate;

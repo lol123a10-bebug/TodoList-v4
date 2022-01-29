@@ -10,18 +10,28 @@ type PropsType = {
 
 const Todo: React.FC<PropsType> = (props) => {
   const todo = useHookstate(props.todo);
-  const { onTodoRemoved } = useTodo();
+  const { onTodoRemoved, onTodoEdited } = useTodo();
 
   const handleRemove = () => {
     window.confirm("Are you sure?") && onTodoRemoved(todo.id.value!);
   };
 
+  const handleDone = () => {
+    onTodoEdited({
+      id: todo.id.value!,
+      key: "isDone",
+      value: !todo.isDone.value,
+    });
+  };
+
   return (
-    <StyledLi>
+    <StyledLi isDone={todo.isDone.value}>
       <p>Title: {todo.name.value}</p>
       <p>Description: {todo.description.value}</p>
-      <p>{todo.isDone.value}</p>
       <BaseButton onClick={handleRemove}>Remove</BaseButton>
+      <BaseButton onClick={handleDone}>
+        {todo.isDone.value ? "Undone" : "Done"}
+      </BaseButton>
     </StyledLi>
   );
 };
@@ -34,6 +44,8 @@ const StyledLi = styled.li`
   max-width: 20rem;
   border: 1px solid #ccc;
   padding: 1.5rem 0.5rem;
+  background-color: ${(props: { isDone: boolean }) =>
+    props.isDone ? "lime" : "salmon"};
 `;
 
 export default Todo;
