@@ -1,10 +1,10 @@
-import { useHookstate } from "@hookstate/core";
 import styled from "styled-components";
 import useTodo from "../../../hookstate/hooks/useTodo";
-import { TodoType } from "../../../hookstate/state/todoHookstate";
 import { ChangeEvent, FormEvent } from "react";
 import ModalWrapper from "../../shared/ui/ModalWrapper";
 import BaseButton from "../../shared/ui/BaseButton";
+import { useState } from "react";
+import { useHookstate } from "@hookstate/core";
 import { useEffect } from "react";
 
 type PropsType = {
@@ -21,33 +21,31 @@ const AddTodoModal: React.FC<PropsType> = (props) => {
   const { onClose } = props;
   const { onTodoAdded } = useTodo();
 
-  const todo = useHookstate<TodoType>(initTodo);
+  const [todo, setTodo] = useState(initTodo);
 
-  const handleTodoValue = (key: "name" | "description") => todo[key].value;
+  const todos = useHookstate("imtotods");
+
+  console.log(todos.value);
+
+  useEffect(() => {
+    return () => {};
+  }, []);
+
+  const handleTodoValue = (key: "name" | "description") => todo[key];
 
   const handleTodoChange =
     (key: "name" | "description") => (e: ChangeEvent<HTMLInputElement>) => {
-      todo[key].set(e.target.value);
+      setTodo((todo) => ({ ...todo, [key]: e.target.value }));
     };
 
-  const handleClose = () => {
-    onClose();
-  };
-
-  useEffect(() => {
-    console.log("mount");
-
-    return () => {
-      console.log("unmount");
-    };
-  }, []);
+  const handleClose = () => onClose();
 
   const handleTodoAdd = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (todo.name.value.trim() === "") return alert("Please fill name.");
+    if (todo.name.trim() === "") return alert("Please fill name.");
 
-    onTodoAdded(todo.value);
+    onTodoAdded(todo);
     handleClose();
   };
 
