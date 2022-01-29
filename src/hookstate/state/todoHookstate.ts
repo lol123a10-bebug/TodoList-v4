@@ -23,9 +23,7 @@ const fetchTodos = async () => {
 
   const todosArray: TodoType[] = [];
 
-  for (const todoId in todos) {
-    todosArray.push({ ...todos[todoId], id: todoId });
-  }
+  for (const todoId in todos) todosArray.push({ ...todos[todoId], id: todoId });
 
   todoHookstate.todoList.set(todosArray);
 };
