@@ -24,9 +24,7 @@ const AddTodoModal: React.FC<PropsType> = (props) => {
 
   const todo = useHookstate<TodoType>(initTodo);
 
-  const handleTodoValue = (key: "name" | "description") => {
-    return todo[key].value;
-  };
+  const handleTodoValue = (key: "name" | "description") => todo[key].value;
 
   const handleTodoChange =
     (key: "name" | "description") => (e: ChangeEvent<HTMLInputElement>) => {
