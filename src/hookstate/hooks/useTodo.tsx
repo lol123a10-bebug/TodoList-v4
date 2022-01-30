@@ -1,6 +1,6 @@
 import { useHookstate } from "@hookstate/core";
 import todoHookstate, {
-  EditTodoType,
+  EditTodoFnType,
   todoActions,
   TodoType,
 } from "../state/todoHookstate";
@@ -20,8 +20,8 @@ const useTodo = () => {
     todoActions.fetchTodos();
   };
 
-  const onTodoEdited = (data: EditTodoType) => {
-    todoActions.editTodo(data);
+  const onTodoEdited: EditTodoFnType = (todo) => {
+    todoActions.editTodo(todo);
   };
 
   return {

@@ -13,7 +13,7 @@ export type TodoType = {
   isDone: boolean;
 };
 
-export type EditTodoType = { id: string; key: keyof TodoType; value: any };
+export type EditTodoFnType = (todo: TodoType) => void;
 
 type InitStateType = {
   todoList: TodoType[];
@@ -51,13 +51,14 @@ const removeTodo = async (id: string) => {
   foundTodo?.set(none);
 };
 
-const editTodo = async (data: EditTodoType) => {
-  const { id, key, value } = data;
+const editTodo: EditTodoFnType = async (newTodo) => {
+  await updateData(`/todos/${newTodo.id}.json`, newTodo);
 
-  await updateData(`/todos/${id}.json`, { [key]: value });
+  const foundTodo = todoHookstate.todoList.find(
+    (todo) => todo.id.value === newTodo.id
+  );
 
-  const foundTodo = todoHookstate.todoList.find((todo) => todo.id.value === id);
-  foundTodo?.[key].set(value);
+  foundTodo?.set(newTodo);
 };
 
 export const todoActions = { addTodo, removeTodo, fetchTodos, editTodo };

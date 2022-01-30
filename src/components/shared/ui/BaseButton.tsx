@@ -1,7 +1,9 @@
 import { ButtonHTMLAttributes } from "react";
 import styled from "styled-components";
 
-const BaseButton: React.FC<ButtonHTMLAttributes<any>> = (props) => {
+const BaseButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = (
+  props
+) => {
   const { type = "button", children, ...attrs } = props;
 
   return (
@@ -14,6 +16,8 @@ const BaseButton: React.FC<ButtonHTMLAttributes<any>> = (props) => {
 const Button = styled.button`
   padding: 0.5rem 1rem;
   background-color: #ccc;
+
+  transition: background-color 0.1s ease-in-out;
 
   &:hover {
     background-color: #bbb;

@@ -1,25 +1,27 @@
 import { useState } from "react";
 import styled from "styled-components";
-import useTodo from "../../../hookstate/hooks/useTodo";
 import { ChangeEvent, FormEvent } from "react";
 import ModalWrapper from "../../shared/ui/ModalWrapper";
 import BaseButton from "../../shared/ui/BaseButton";
+import { TodoType } from "../../../hookstate/state/todoHookstate";
 
 type PropsType = {
   onClose: Function;
+  onSubmit: (todo: TodoType) => void;
+  propTodo?: TodoType;
 };
 
 const initTodo = {
+  id: "",
   name: "",
   description: "",
   isDone: false,
 };
 
-const AddTodoModal: React.FC<PropsType> = (props) => {
-  const { onClose } = props;
-  const { onTodoAdded } = useTodo();
+const TodoModal: React.FC<PropsType> = (props) => {
+  const { onClose, onSubmit, propTodo } = props;
 
-  const [todo, setTodo] = useState(initTodo);
+  const [todo, setTodo] = useState(propTodo || initTodo);
 
   const handleTodoValue = (key: "name" | "description") => todo[key];
 
@@ -30,18 +32,18 @@ const AddTodoModal: React.FC<PropsType> = (props) => {
 
   const handleClose = () => onClose();
 
-  const handleTodoAdd = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (todo.name.trim() === "") return alert("Please fill name.");
 
-    onTodoAdded(todo);
+    onSubmit(todo);
     handleClose();
   };
 
   return (
     <ModalWrapper onClose={handleClose}>
-      <StyledAddTodo onSubmit={handleTodoAdd}>
+      <StyledAddTodo name={todo.id} onSubmit={handleSubmit}>
         <Label htmlFor="name">Title:</Label>
         <Input
           id="name"
@@ -82,4 +84,4 @@ const StyledAddTodo = styled.form`
   row-gap: 1rem;
 `;
 
-export default AddTodoModal;
+export default TodoModal;
