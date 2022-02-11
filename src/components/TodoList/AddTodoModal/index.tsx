@@ -1,4 +1,3 @@
-import { useHookstate } from "@hookstate/core";
 import styled from "styled-components";
 import useTodo from "../../../hookstate/hooks/useTodo";
 import { TodoType } from "../../../hookstate/state/todoHookstate";
@@ -6,6 +5,7 @@ import { ChangeEvent, FormEvent } from "react";
 import ModalWrapper from "../../shared/ui/ModalWrapper";
 import BaseButton from "../../shared/ui/BaseButton";
 import { useEffect } from "react";
+import { useHookstate } from "../../../utils/hooks";
 
 type PropsType = {
   onClose: Function;
